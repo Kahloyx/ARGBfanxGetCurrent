@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Command the arduino to control an argb fan via /dev/ttyUSB0
+
+echo "Color Switch Command"
+if [[ $1 = "--help" ]]; then
+    echo "
+--- n for lighting up the argb fan.
+--- f for lighting down the argb fan.
+--- s for switching between registered colors cycles.
+--- --help to display this help Mr $USER !"
+elif [[ $1 == 'n' ]] || [[ $1 == 'f' ]] || [[ $1 == 's' ]]; then
+	echo $1 >> /dev/ttyUSB0
+else
+	echo "
+Usage: argb <n/f/s/--help>."
+fi
