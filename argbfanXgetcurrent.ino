@@ -1,8 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_INA219.h>
 
-Adafruit_INA219 ina219;
-// Have introduced the ina 219 part, lets make the rest
+Adafruit_INA219 ina219;    // Have introduced the ina 219 part, lets make the rest
 
 #include <FastLED.h>
 int argbSwitch = 2;    // This pin is used to feed the argb ring with 5V
