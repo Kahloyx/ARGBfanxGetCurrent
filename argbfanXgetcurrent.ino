@@ -5,11 +5,11 @@ Adafruit_INA219 ina219;
 // Have introduced the ina 219 part, lets make the rest
 
 #include <FastLED.h>
-int argbSwitch = 2;
-#define paletteSwitch A1
-int currpal = 2;
+int argbSwitch = 2;    // This pin is used to feed the argb ring with 5V
+int currpal = 2;        // This one is the palette by default (the aestethicc one)
+int maxPalette = 2;     // This is the number of registrered palette we got
 
-#define LED_PIN     5
+#define LED_PIN     5       // This paragraph depends on your fan tho
 #define NUM_LEDS    14
 #define BRIGHTNESS  64
 #define LED_TYPE    WS2811
@@ -23,7 +23,7 @@ TBlendType    currentBlending;
 
 extern CRGBPalette16 myRedWhiteBluePalette;
 extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
-int i = 0; //This one is gonna be the one who tell when we mesure currentflow
+int i = 0; //This one is gonna be the one who tell when we mesure currentflow, so each 200 leds cycles
 
 void setup() {
   delay( 200 ); // power-up safety delay
@@ -39,9 +39,7 @@ void setup() {
   }
 
   uint32_t currentFrequency;
-
-  pinMode(paletteSwitch, INPUT);
-	pinMode(argbSwitch, OUTPUT);
+	pinMode(argbSwitch, OUTPUT);  // The alimentation of the argb ring onto the fan
   int j = 0;
   while (j < 2) {               // Just an init as we love'em
     fill_solid( currentPalette, 16, CRGB::White);
@@ -51,7 +49,7 @@ void setup() {
     FastLED.show();
 	  digitalWrite(argbSwitch, HIGH);  // By activating this output we feed the Vin of the color ring and so it light up
     FastLED.delay(5040 / UPDATES_PER_SECOND);
-    digitalWrite(argbSwitch, LOW);
+    digitalWrite(argbSwitch, LOW);   // And then we shut it off, init thing ya know
     delay(420);
     j++;
   }
@@ -72,7 +70,7 @@ void setup() {
   ina219.setCalibration_32V_1A();
 
   Serial.println("Measuring voltage and current with INA219 ...");
-  digitalWrite(argbSwitch, HIGH);           // This means that once the init done we light the argb on
+  digitalWrite(argbSwitch, HIGH);           // This means that once the init done we light the argb on on the default palette
 }
 
 void loop() {
@@ -83,32 +81,19 @@ void loop() {
   }
   i++;
 
-  int buttonengaged = analogRead(paletteSwitch);
-  int doI = buttonengaged;         // "Listening" on the pin to see if raspi sended the information to switch light cycle
   
-  if (doI <= 750 ) {
-    currpal = currpal + 1;
-    Serial.println("Button engaged");
-    delay(1269);
-    if (currpal == 1){
-    Serial.println("Selecting first palette");
-    } 
-    if (currpal == 2){
-    Serial.println("Selecting second palette");
-    }
-  }
   if (currpal == 1){
     FirstPalette();
   }
   if (currpal == 2){
     SecondPalette();
   }
-  if (currpal > 2){
+  if (currpal > maxPalette){    // This way we cycle throught the palette we got
     currpal = 1;
   }
 
 
-  static uint8_t startIndex = 0;
+  static uint8_t startIndex = 0;     //Displaying the palette we've choosen
   startIndex = startIndex + 1; /* motion speed */
 
   FillLEDsFromPaletteColors( startIndex);
@@ -116,7 +101,7 @@ void loop() {
   FastLED.show();
   FastLED.delay(2520 / UPDATES_PER_SECOND);
 
-  if ( Serial.available()) {     // Check if any char available on serial
+  if ( Serial.available()) {     // Check if any char available on serial, if there's any instructions
     char c = Serial.read();
     if (c == 's'){
       Serial.println("Switching.");
@@ -163,7 +148,7 @@ void FirstPalette()
 
 }
 
-// This function sets up a palette of purple and green stripes.
+// This function sets up a palette of pink and cyan stripes.
 void SecondPalette()                 // What I got in This Function is a half and half circle cyan and pink, way too much aestethicc and the speed is calculated and smooth enought.
 {
   CRGB c1 = CHSV( HUE_AQUA, 255, 255);
