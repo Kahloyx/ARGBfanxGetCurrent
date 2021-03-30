@@ -6,7 +6,7 @@ Adafruit_INA219 ina219;    // Have introduced the ina 219 part, lets make the re
 #include <FastLED.h>
 int argbSwitch = 2;    // This pin is used to feed the argb ring with 5V
 int currpal = 2;        // This one is the palette by default (the aestethicc one)
-int maxPalette = 2;     // This is the number of registrered palette we got
+int maxPalette = 4;     // This is the number of registrered palette we got
 
 #define LED_PIN     5       // This paragraph depends on your fan tho
 #define NUM_LEDS    14
@@ -87,6 +87,12 @@ void loop() {
   if (currpal == 2){
     SecondPalette();
   }
+  if (currpal == 3){
+    ThirdPalette();
+  }
+  if (currpal == 4){
+    FourthPalette();
+  }
   if (currpal > maxPalette){    // This way we cycle throught the palette we got
     currpal = 1;
   }
@@ -161,6 +167,34 @@ void SecondPalette()                 // What I got in This Function is a half an
                      c1, c2, c1, c2,
                      c1, c2, c1, c2,
                      c1, c2, c1, c2 );
+}
+void ThirdPalette()                 // What I got in This Function is a half and half circle cyan and pink, way too much aestethicc and the speed is calculated and smooth enought.
+{
+  CRGB c1 = CHSV( HUE_RED, 255, 255);
+  CRGB c2  = CHSV( HUE_ORANGE, 255, 255);
+  CRGB c3 = CHSV( HUE_YELLOW, 255, 255);
+  CRGB c4 = CHSV( HUE_PINK, 255, 255);
+  CRGB c5  = CRGB::Black;
+  //fill_solid( currentPalette, 16, c2);
+
+  currentPalette = CRGBPalette16(
+                     c1, c2, c3, c4,
+                     c1, c2, c3, c4,
+                     c1, c2, c3, c4,
+                     c1, c2, c3, c4 );
+}
+
+void FourthPalette()
+{
+  CRGB c1 = CHSV(HUE_YELLOW, 255, 255);
+  CRGB c2 = CHSV(HUE_PINK, 255, 255);
+  fill_solid( currentPalette, 16, CRGB::Black);
+  currentPalette[0] = c1;
+  currentPalette[3] = c2;
+  currentPalette[7] = c1;
+  currentPalette[10] = c2;
+  currentPalette[12] = c1;
+  currentPalette[14] = c2;
 }
 
 
