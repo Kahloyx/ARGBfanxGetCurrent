@@ -5,7 +5,7 @@ Adafruit_INA219 ina219;    // Have introduced the ina 219 part, lets make the re
 
 #include <FastLED.h>
 int argbSwitch = 2;    // This pin is used to feed the argb ring with 5V
-int currpal = 2;        // This one is the palette by default (the aestethicc one)
+int currpal = 4;        // This one is the palette by default (the aestethicc one)
 int maxPalette = 4;     // This is the number of registrered palette we got
 
 #define LED_PIN     5       // This paragraph depends on your fan tho
@@ -190,10 +190,10 @@ void FourthPalette()
   CRGB c2 = CHSV(HUE_PINK, 255, 255);
   fill_solid( currentPalette, 16, CRGB::Black);
   currentPalette[0] = c1;
-  currentPalette[3] = c2;
-  currentPalette[7] = c1;
-  currentPalette[10] = c2;
-  currentPalette[12] = c1;
+  currentPalette[2] = c2;
+  currentPalette[5] = c1;
+  currentPalette[8] = c2;
+  currentPalette[11] = c1;
   currentPalette[14] = c2;
 }
 
