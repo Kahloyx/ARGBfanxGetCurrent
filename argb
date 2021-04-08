@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Command the arduino to control an argb fan via /dev/ttyUSB0
+# This script simply check if the first argument is one of the command accepted, if it is, it send the argument to the port of the arduino, ( So it must be well specified
+# in this script, and we must have the permissions to send to this device).
 
 echo "Color Switch Command"
 if [[ $1 = "--help" ]]; then
