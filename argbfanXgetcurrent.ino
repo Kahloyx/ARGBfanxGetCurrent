@@ -13,7 +13,7 @@ int maxPalette = 4;     // This is the number of registrered palette I got into 
 
 #define LED_PIN     5       // The data pin of the argb led strip
 #define NUM_LEDS    14		//Ofc it depends of your led strip
-#define BRIGHTNESS  64		// Decimal value between 0 and 255...
+#define BRIGHTNESS  255		// Decimal value between 0 and 255...
 #define LED_TYPE    WS2811	// Ofc it depends of your led strip
 #define COLOR_ORDER GRB		// Same ...
 CRGB leds[NUM_LEDS];
@@ -31,6 +31,7 @@ void setup() {
   delay( 200 ); // power-up safety delay
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
   FastLED.setBrightness(  BRIGHTNESS );
+  FastLED.setMaxPowerInVoltsAndMilliamps(5, 500);
   currentPalette = RainbowColors_p;
   currentBlending = LINEARBLEND;
   // Just introducing the getcurrent setup
