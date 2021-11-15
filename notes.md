@@ -12,3 +12,6 @@ Sun Feb  7 21:24:04 CET 2021
 
 Tue 23 Feb 2021 07:59:51 PM CET
 	I think Imma search for a cycle with some pink/purple red/orange/yellow cycle, maybe 3 or 4 main colors to build a theme around my desk, Just hope that I'll find some decent premade HUEs to work with, otherwise I will make some customs ones.
+
+Mon 15 Nov 2021:
+	I changed the brightness to be precisely 5V and 500Ma to be sure it won't burn the arduino. /shrug, probably more to come like replacing the spaghetti code with a switch case, and add more theme, or a function to maybe blink when a user connect onto the server idk.
